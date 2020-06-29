@@ -33,28 +33,28 @@ const fetchURL = async urlData => {
 const Query = ({ children, urls }) => {
   const [data, setData] = useState([])
 
-  const fetchData = async () => {
-    if (Array.isArray(urls)) {
-      Promise.allSettled(
-        urls.map(async url => await fetchURL(url)))
-          .then(res => setData(res)
-      )
-    } else if (
-      typeof urls === `string` ||
-      (typeof urls === `object` && urls !== null)
-    ) {
-      const data = await fetchURL(urls)
-      setData(data)
-    } else {
-      throw new Error(
-        `urls ${urls} have wrong data type. It has to be a string, array or an object.`
-      )
-    }
-  }
-
   useEffect(() => {
+    const fetchData = async () => {
+      if (Array.isArray(urls)) {
+        Promise.allSettled(
+          urls.map(async url => await fetchURL(url)))
+          .then(res => setData(res)
+          )
+      } else if (
+        typeof urls === `string` ||
+        (typeof urls === `object` && urls !== null)
+      ) {
+        const data = await fetchURL(urls)
+        setData(data)
+      } else {
+        throw new Error(
+          `urls ${urls} have wrong data type. It has to be a string, array or an object.`
+        )
+      }
+    }
+
     fetchData()
-  }, [])
+  }, [urls])
 
   return (
     <>
