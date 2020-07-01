@@ -14,7 +14,7 @@ const fetchURL = async urlData => {
 
     const options = {
       method: method || `GET`,
-      ...(headers || {}),
+      headers: headers || {},
     }
 
     if (options.method !== `GET`) {
@@ -39,7 +39,7 @@ const Query = ({ children, urls }) => {
         Promise.allSettled(
           urls.map(async url => await fetchURL(url)))
           .then(res => setData(res)
-          )
+        )
       } else if (
         typeof urls === `string` ||
         (typeof urls === `object` && urls !== null)
